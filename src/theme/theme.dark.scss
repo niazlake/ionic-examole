@@ -1,0 +1,128 @@
+.dark-theme {
+    ion-content {
+      background-color: #222222;
+      color: #fff !important;
+    }
+   
+    .toolbar-title {
+      color: #fff;
+    }
+   
+    .header .toolbar-background {
+      background-color: #333333;
+    }
+
+    .activeColor{
+        color: map-get($night, activeMenuColot) !important;
+    }
+    ion-icon{
+      color: map-get($night, iconColor); 
+    }
+    .logo{
+        background-color: map-get($night, logo);
+    }
+    .menuList{
+        color: #fff;
+        font-size: 1.04em;
+    }
+
+    .lightButton{
+        background-color: map-get($night, lightButtonBg);
+        color: map-get($night, lightButtonColor);
+    }
+    .clearButton{
+        color: map-get($night ,activeMenuColot)
+    }
+
+    ion-spinner *{
+        width: 28px;
+        height: 28px;
+        stroke: #000 !important;
+    }
+
+    // waiting orders page 
+    .waitingOrderCard{
+        background-color: map-get($night, cardBg);
+        ion-card-content{
+            font-size: 1.2em;
+            color: #fff;
+            ion-card-title{
+                color: #fff;
+            }
+            p{
+                color: map-get($night, iconColor);
+                font-size: 1em;
+                padding-top: 10px;
+            }
+            .go{
+                color: map-get($night, cardTimeGo);
+            }
+        }
+     }
+
+    .loadingCard{
+        background-color: map-get($night, cardBg);
+        color: #fff;
+        .dataIcons{
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        p{
+            color: map-get($night, iconColor);
+            font-size: 1em;
+        }
+        span{
+            font-size: 1.1em;
+        }
+        .label{
+            color: #fff;
+            font-size: 1.1em;
+        }
+        ion-item{
+            background-color: map-get($night, cardBg);
+        }
+        ion-list{
+            .photoButton{
+                background-color: map-get($night, cardBg);
+                h3{
+                    color: #fff;
+                }
+            }
+        }
+     }  
+
+    .checkDetail{
+        ion-item{
+            background-color: map-get($night, cardBg);
+            color: #fff;
+            margin-bottom: -12px !important;
+        }
+        .userName{
+            font-size: 18px;
+        }
+        .header{
+            color: map-get($night, cardTimeGo);
+            margin-bottom: -12px !important;
+            font-size: 18px;
+        } 
+        .name{
+            color: map-get($night, iconColor);
+            font-size: 18px;
+        }
+        .value{
+            padding-left: 5px;
+            font-size: 18px;
+        }
+    }
+
+    .errorPrompt{
+        background-color: white;
+        color: red;
+        button{
+            color: red;
+        }
+     }
+
+} 

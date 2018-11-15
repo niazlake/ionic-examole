@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-navbar color>
+    <ion-title>№ {{ userData.orderNumber}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-list class="checkDetail" no-lines>
+      <ion-item>
+        <span class="header">Данные водителя</span>
+      </ion-item>
+      <ion-item text-wrap>
+        <span class="userName" text-wrap>{{userData.surname}} {{userData.firstname}} {{userData.lastname}}</span></ion-item>
+      <ion-item>
+        <span class="name">Телефон №:</span><span class="value">+{{userData.phone}}</span>
+      </ion-item>
+      <ion-item *ngIf="userData.document">
+        <span class="name">Паспорт №:</span><span class="value" text-wrap>{{userData.document}}</span>
+      </ion-item>
+      <ion-item text-wrap *ngIf="userData.document_member">
+        <span class="name">Выдан</span>:<span class="value">{{ userData.document_member }}</span>
+      </ion-item>
+
+      <ion-item *ngIf="userData.car.brand || userData.car.number || userData.car.number_trailer || userData.car.body || userData.car.value || userData.car.capacity">
+        <span class="header">Данные автомобиля</span>
+      </ion-item>
+      <ion-item *ngIf="userData.car.brand" text-wrap>
+        <span class="name">Бренд:</span><span class="value">{{userData.car.brand}}</span>
+      </ion-item>
+      <ion-item *ngIf="userData.car.number" text-wrap>
+        <span class="name">Гос №:</span><span class="value">{{userData.car.number}}</span>
+      </ion-item>
+      <ion-item *ngIf="userData.car.number_trailer" text-wrap>
+        <span class="name">Прицеп:</span><span class="value">{{userData.car.number_trailer}}</span>
+      </ion-item>
+      <ion-item *ngIf="userData.car.body" text-wrap>
+        <span class="name">Тип кузова:</span><span class="value">{{userData.car.body}}</span>
+      </ion-item>
+      <ion-item *ngIf="userData.car.value" text-wrap>
+        <span class="name">Грузоподъемность:</span><span class="value">{{userData.car.value}} т.</span>
+      </ion-item>
+      <ion-item *ngIf="userData.car.capacity" text-wrap>
+        <span class="name">Объем:</span><span class="value">{{userData.car.capacity}} м3</span>
+      </ion-item>
+    </ion-list>
+
+
+    <ion-row class="buttonClass">
+      <ion-col>
+        <button ion-button block large class="lightButton" (tap)="onErrorUserdata()">Сообщить об ошибке в данных</button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="buttonClass">
+      <ion-col>
+        <button ion-button block large class="lightButton" (tap)="onAcceptOrder()">Принять к исполнению</button>
+      </ion-col>
+    </ion-row>    
+
+</ion-content>

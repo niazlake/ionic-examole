@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar color="headerColor">
+    <button ion-button menuToggle>
+      <ion-icon class="menuIcon" name="menu"></ion-icon>
+    </button>
+    <ion-title>Не приложены документы</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+
+      <div *ngFor="let order of notAttachedOrders; let i=index" (tap)="onSelectOrder(order, i)">
+        <order-card [order]="order"></order-card>
+      </div>
+
+</ion-content>

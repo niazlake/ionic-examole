@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>№ {{selectedOrder?.number}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row class="textRow">
+    <ion-col text-center *ngIf="orderService.isInItems">
+      <h4>Места погрузки: ({{ selectedOrder.inItems.length }}
+              <span *ngIf="selectedOrder.inItems.length !== 1">адреса</span>
+              <span *ngIf="selectedOrder.inItems.length == 1">адрес</span> 
+      )</h4>
+    </ion-col>
+
+    <ion-col text-center *ngIf="!orderService.isInItems">
+        <h4>Места выгрузки: ({{ selectedOrder.outItems.length }}
+                <span *ngIf="selectedOrder.outItems.length !== 1">адреса</span>
+                <span *ngIf="selectedOrder.outItems.length == 1">адрес</span> 
+        )</h4>
+      </ion-col>
+    </ion-row>
+
+
+  <ion-card class="loadingCard">
+    <ion-item *ngFor="let data of selectedOrder.physicalData" no-lines>
+      <span text-wrap>{{ data.descriptionOfCargo }}</span>
+      <p class="label" text-wrap>{{ data.quantityOfCargo }} грузовых мест, {{ data.loadingWeight | number : '1.2-2' }} т., {{ data.bodySpace | number : '1.2-2' }} м3.</p>
+    </ion-item>
+  </ion-card>
+  
+
+  <ion-card class="loadingCard" *ngFor="let item of orderService.isInItems ? selectedOrder.inItems : selectedOrder.outItems">
+      <ion-item>
+          <ion-row>
+            <ion-col col-1 style="padding: 0; display: flex; justify-content: center; align-items: center;">
+                <img src="assets/imgs/location.png">
+            </ion-col>
+            <ion-col col-11>
+                <p>Место</p>
+                <span>{{ item.name }}, {{ item.factory }}</span>
+                <p class="label" text-wrap>{{ item.address }}, {{ item.factory }}</p>
+            </ion-col>
+          </ion-row>
+      </ion-item>
+
+      <ion-item>
+          <ion-row>
+            <ion-col col-1 style="padding: 0; display: flex; justify-content: center; align-items: center;">
+                <img src="assets/imgs/time.png">
+            </ion-col>
+            <ion-col col-11>
+                <p>Время</p>
+                <label>{{ item.timeIn*1000 | date: 'dd.MM.yyyy H:mm' }}</label>
+            </ion-col>
+          </ion-row>
+      </ion-item>
+
+      <ion-item>
+          <ion-row>
+            <ion-col col-1 style="padding: 0; display: flex; justify-content: center; align-items: center;">
+              <img *ngIf="item.loadingUnloadingType == 'верхняя' || item.loadingUnloadingType == 'Верхняя'" src="assets/imgs/truck_out.png">
+              <img *ngIf="item.loadingUnloadingType == 'боковая' || item.loadingUnloadingType == 'Боковая'" src="assets/imgs/truck_in.png">
+            </ion-col>
+            <ion-col col-11>
+              <p>Способ загрузки/разгрузки</p>
+              <label text-wrap>{{ item.loadingUnloadingType }}</label>
+            </ion-col>
+          </ion-row>
+      </ion-item>
+
+      <ion-item *ngFor="let contact of item.contacts" (click)="onCall(contact.phone)">
+        <ion-row>
+          <ion-col col-1 style="padding: 0; display: flex; justify-content: center; align-items: center;">
+              <img src="assets/imgs/phone.png">
+          </ion-col>
+          <ion-col col-11>
+              <p>{{contact.name}}</p>
+              <label>{{ contact.phone }}</label>
+          </ion-col>
+        </ion-row>  
+      </ion-item>
+
+  </ion-card>
+
+
+  <ion-row text-center>
+    <ion-col>
+      <button ion-button clear large block class="clearButton" (click)="openYandexNavigator()">
+          <div item-start>
+              <img style="width: 28px; height: 28px" src="assets/imgs/map.png">
+          </div>
+        &nbsp;&nbsp;
+        ПОСТРОИТЬ МАРШРУТ</button>
+    </ion-col>
+  </ion-row>
+
+
+  <ion-row text-center class="buttonClass">
+    <ion-col>
+      <a ion-button block large class="lightButton" (tap)="checkMyDetail()">Принять в работу</a>
+    </ion-col>
+  </ion-row>
+
+
+</ion-content>

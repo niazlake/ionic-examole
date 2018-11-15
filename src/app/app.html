@@ -1,0 +1,37 @@
+<ion-menu [content]="content" [class]="selectedTheme">
+
+  <ion-content>
+
+    <ion-row text-center class="logo">
+      <ion-col>
+        <img src="assets/imgs/menu_logo0.png">
+      </ion-col>
+    </ion-row>
+
+    <ion-list class="menuList">
+      <button menuClose ion-item *ngFor="let page of pages; let indx = index" (tap)="openPage(page)" [class.activeColor]="setActivePage(page)"
+        class="menuList">
+        <img src="assets/imgs/{{page.icon}}">
+        <span>{{ page.title }} </span>
+        <ion-badge color="light" [class.activeColor]="setActivePage(page)" item-end>{{ pagesQty[indx].qty }}</ion-badge>
+      </button>
+      <button ion-item menuClose (tap)="logout()" class="menuList">
+        <img src="assets/imgs/menu_008.png">
+        <span>Выйти</span>
+      </button>
+      <!-- <button ion-item
+              class="menuList vers">
+        <ion-icon name="md-pulse" item-start></ion-icon> 
+          Версия: 0.0.22
+          <p>pushId: {{authService.userIdForPush}}</p>
+      </button> -->
+
+    </ion-list>
+
+    <hr class="line">
+
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="rootPage" [class]="selectedTheme" #content swipeBackEnabled="false"></ion-nav>

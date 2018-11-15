@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-navbar class="menuIcon">
+    <ion-title>№ {{orderService.selectedOrder?.number}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- <ion-card padding>
+    <p style="color: green">Мои координаты</p>
+    <label>lat: {{locationTracker.lat}}</label><br>
+    <label>lng: {{locationTracker.lng}}</label><br>
+
+    <p style="color: green">Расстояние до точки </p>
+    <label>R: {{locationTracker.dist/1000}} км.</label><br>
+  </ion-card> -->
+
+  <h3>Погрузка {{ indx + 1 }}</h3>
+
+  <ion-card class="loadingCard">
+    <ion-item>
+      <ion-row>
+        <ion-col col-1 style="padding: 0; display: flex; justify-content: center; align-items: center;">
+            <img src="assets/imgs/location.png">
+        </ion-col>
+        <ion-col>
+            <p>Место</p>
+            <span text-wrap>{{ currentPoint.name }}, {{ currentPoint.factory }}</span>
+            <p class="label" text-wrap>{{ currentPoint.address }}</p>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item>
+      <ion-row>
+        <ion-col col-1 style="padding: 0; display: flex; justify-content: center; align-items: center;">
+            <img src="assets/imgs/time.png">
+        </ion-col>
+        <ion-col>
+            <p>Время</p>
+            <label>{{ currentPoint.timeIn*1000 | date:'dd.MM.yyyy HH:mm' }}</label>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item>
+      <ion-row>
+        <ion-col col-1 style="padding: 0; display: flex; justify-content: center; align-items: center;">
+            <img *ngIf="currentPoint.loadingUnloadingType == 'верхняя'" src="assets/imgs/truck_out.png">
+            <img *ngIf="currentPoint.loadingUnloadingType == 'боковая'" src="assets/imgs/truck_in.png">
+        </ion-col>
+        <ion-col>
+            <p>Способ загрузки/разгрузки</p>
+            <label text-wrap>{{ currentPoint.loadingUnloadingType }}</label>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+  </ion-card>
+
+  <ion-row text-center class="buttonClass">
+    <ion-col>
+        <button ion-button block large class="lightButton" *ngIf="currentPoint.state == 0"
+                (tap)="iCame()">
+          <label *ngIf="!locationTracker.isLoading">Прибыл</label>
+          
+          <ion-spinner *ngIf="locationTracker.isLoading"></ion-spinner>
+        </button>
+
+        <button ion-button block large class="lightButton" *ngIf="currentPoint.state !== 0"
+                (tap)="imGoing()">
+          <span>{{title}}</span>
+        </button>
+    </ion-col>
+  </ion-row>
+
+
+</ion-content>

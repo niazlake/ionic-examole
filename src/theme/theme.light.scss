@@ -1,0 +1,126 @@
+.light-theme {
+
+    ion-content {
+        background-color: #F0F0F0;
+    }
+    .toolbar-title {
+        color: #ffffff;
+    }
+    .toolbar-background {
+        background-color: #E40613;
+        color: #ffffff;
+    }
+
+    .activeColor{
+        color: map-get($day, activeMenuColot) !important;
+    }
+
+    ion-icon{
+        color: map-get($day, iconColor); 
+    }
+    .logo{
+        background-color: map-get($day, logo);
+    }
+    .activeColor{
+        color: map-get($colors, secondary);
+    }
+    .menuList{
+        color: #000;
+        font-size: 1.04em;
+    }
+    
+    .lightButton{
+        background-color: map-get($day, lightButtonBg);
+        color: map-get($day, lightButtonColor);
+    }
+
+    .clearButton{
+        color: map-get($day ,activeMenuColot)
+    }
+
+    .primeryButton{
+        background-color: map-get($day, primeryButton);
+        color: #fff;
+    }
+
+
+    ion-spinner *{
+        width: 28px;
+        height: 28px;
+        stroke: #ffffff !important;
+    }
+
+// waiting orders page 
+.waitingOrderCard{
+    background-color: map-get($day, cardBg);
+    ion-card-content{
+        font-size: 1.2em;
+        color: #000;
+        ion-card-title{
+            color: #000;
+        }
+        p{
+            color: map-get($day, iconColor);
+            font-size: 1em;
+            padding-top: 10px;
+        }
+        .go{
+            color: map-get($day, cardTimeGo);
+        }
+    }
+ }
+
+ .loadingCard{
+    background-color: map-get($day, cardBg);
+    color: #000;
+    .dataIcons{
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    p{
+        font-size: 1em;
+    }
+    span{
+        font-size: 1.1em;
+        color: #000 !important;
+        color: #000000;
+    }
+    .label{
+        color: #000;
+        font-size: 1.1em;
+    }
+ }
+
+ .checkDetail{
+    ion-item{
+        margin-bottom: -12px !important;
+    }
+    .header{
+        color: map-get($day, cardTimeGo);
+        margin-bottom: -12px !important;
+        font-size: 18px;
+    } 
+    .userName{
+        font-size: 18px;
+    }
+    .name{
+        color: map-get($day, iconColor);
+        font-size: 18px;
+    }
+    .value{
+        padding-left: 5px;
+        font-size: 18px;
+    }
+ }
+
+ .errorPrompt{
+    background-color: white;
+    color: red;
+    button{
+        color: red;
+    }
+ }
+
+}

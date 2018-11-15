@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Не приложены документы</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-slides pager="true" (ionSlideDidChange)="slideChanged()">
+        <ion-slide class="slideTag" *ngFor="let point of orderService.selectedOrder.outItems">
+            <h3>Выгрузка {{ point.ordinalNumber }}</h3>
+    
+            <ion-card class="loadingCard">
+                <ion-item>
+                    <ion-row>
+                    <ion-col col-1 style="padding: 0; display: flex; justify-content: center; align-items: center;">
+                        <img style="width: 30;" src="assets/imgs/location.png">
+                    </ion-col>
+                    <ion-col>
+                        <p>Место</p>
+                        <span text-wrap>{{ point?.name }}, {{point?.factory}}</span>
+                        <p class="label" text-wrap>{{ point?.address }}</p>
+                    </ion-col>
+                    </ion-row>
+                </ion-item>
+                
+                <ion-item>
+                    <ion-row>
+                    <ion-col col-1 style="padding: 0; display: flex; justify-content: center; align-items: center;">
+                        <img src="assets/imgs/time.png">
+                    </ion-col>
+                    <ion-col>
+                        <p>Время</p>
+                        <label>{{ point?.timeIn*1000 | date:'dd.MM.yyyy HH:mm'}}</label>
+                    </ion-col>
+                    </ion-row>
+                </ion-item>
+            
+                <ion-item>
+                    <ion-row>
+                        <ion-col col-1 style="padding: 0; display: flex; justify-content: center; align-items: center;">
+                            <img *ngIf="point.loadingUnloadingType == 'верхняя' || point.loadingUnloadingType == 'Верхняя'" src="assets/imgs/truck_out.png">
+                            <img *ngIf="point.loadingUnloadingType == 'боковая' || point.loadingUnloadingType == 'Боковая'" src="assets/imgs/truck_in.png">
+                        </ion-col>
+                    <ion-col>
+                        <p>Способ загрузки/разгрузки</p>
+                        <label text-wrap>{{ point?.loadingUnloadingType }}</label>
+                    </ion-col>
+                    </ion-row>        
+                </ion-item>
+            
+                <div *ngIf="point.damage == 1">        
+                    <ion-row text-center>
+                        <ion-col class="maintext">Приложены документы:</ion-col>
+                    </ion-row>
+                
+                    <ion-list>
+                        <button ion-item class="photoButton" (click)="uploadDocuments(1, point.ordinalNumber, point.id)">
+                                <img class="docImage" *ngIf="orderService.photosZagruzkiTest.docs.length == 0 && !isLoading" item-start src="assets/imgs/default-placeholder.png">
+                                <img class="docImage" *ngIf="orderService.photosZagruzkiTest.docs.length > 0 && !isLoading" item-start src="assets/imgs/geenDoc.png">
+                            <h3>Фото загрузка</h3>
+                        </button>
+                        
+                        <button ion-item class="photoButton" (click)="uploadDocuments(2, point.ordinalNumber, point.id)">
+                            <img class="docImage" *ngIf="orderService.photosAktTest.docs.length == 0 && !isLoading" item-start src="assets/imgs/default-placeholder.png">
+                            <img class="docImage" *ngIf="orderService.photosAktTest.docs.length > 0 && !isLoading" item-start src="assets/imgs/geenDoc.png">
+                            <h3>Акт повреждений</h3>
+                        </button>
+                        
+                        <button ion-item class="photoButton" (click)="uploadDocuments(3, point.ordinalNumber, point.id)">
+                            <img class="docImage" *ngIf="orderService.photosTransportnayaTest.docs.length == 0 && !isLoading" item-start src="assets/imgs/default-placeholder.png">
+                            <img class="docImage" *ngIf="orderService.photosTransportnayaTest.docs.length > 0 && !isLoading" item-start src="assets/imgs/geenDoc.png">
+                            <h3>Транспортная накладная</h3>
+                        </button>
+                    </ion-list>
+                </div>
+                
+                <div *ngIf="point.damage == 0">
+                    <ion-row text-center>
+                        <ion-col class="maintext">Приложены документы:</ion-col>
+                    </ion-row>
+                
+                    <ion-list>
+                        <button ion-item class="photoButton" (click)="uploadDocuments(3, point.ordinalNumber, point.id)">
+                            <img class="docImage" *ngIf="orderService.photosTransportnayaTest.docs.length == 0 && !isLoading" item-start src="assets/imgs/default-placeholder.png">
+                            <img class="docImage" *ngIf="orderService.photosTransportnayaTest.docs.length > 0 && !isLoading" item-start src="assets/imgs/geenDoc.png">
+                            <h3>Транспортная накладная</h3>
+                        </button>
+                    </ion-list>
+                </div>
+            
+                </ion-card><br>
+            </ion-slide>
+      </ion-slides>
+
+      <ion-row text-center>
+          <ion-col>
+              <button ion-button large class="lightButton"
+                      [disabled]="!helperService.isNetworkConnected"
+                      (click)="finishOrder()">Закрыть лист</button>
+          </ion-col>
+      </ion-row>
+
+
+</ion-content>

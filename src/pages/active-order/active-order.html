@@ -1,0 +1,183 @@
+<ion-header>
+  <ion-navbar color="headerColor">
+    <button ion-button menuToggle>
+      <ion-icon class="menuIcon" name="menu"></ion-icon>
+    </button>
+    <ion-title *ngIf="isThereItem">№ {{activeOrder?.number}}</ion-title>
+    <ion-title *ngIf="!isThereItem">В работе</ion-title> 
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- <ion-card padding>
+    <p style="color: green">Мои координаты</p>
+    <label>lat: {{locationTracker.lat}}</label><br>
+    <label>lng: {{locationTracker.lng}}</label><br>
+
+    <p style="color: green">Расстояние до точки </p>
+    <label>R: {{locationTracker.dist/1000}} км.</label><br>
+  </ion-card> -->
+
+<ion-grid *ngIf="!isThereItem" class="ifNoZayavka">
+  <ion-row text-center>
+    <ion-col>
+      <img class="sadIcon" src="assets/imgs/folder.png"/>
+      <h5>Нет активных заказов!</h5>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<div *ngIf="isThereItem">
+  <h3 *ngIf="indx !== null ">Выгрузка {{ indx + 1 }}</h3>
+  
+    <ion-card class="loadingCard">
+      <ion-item>
+        <ion-row>
+          <ion-col col-1 style="padding: 0; display: flex; justify-content: center; align-items: center;">
+              <img style="width: 30;" src="assets/imgs/location.png">
+          </ion-col>
+          <ion-col>
+              <p>Место</p>
+              <span text-wrap>{{ currentPoint?.name }}, {{currentPoint?.factory}}</span>
+              <p class="label" text-wrap>{{ currentPoint?.address }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      
+      <ion-item>
+        <ion-row>
+          <ion-col col-1 style="padding: 0; display: flex; justify-content: center; align-items: center;">
+              <img src="assets/imgs/time.png">
+          </ion-col>
+          <ion-col>
+            <p>Время</p>
+            <label>{{ currentPoint?.timeIn*1000 | date:'dd.MM.yyyy HH:mm'}}</label>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+
+      <ion-item>
+         <ion-row>
+            <ion-col col-1 style="padding: 0; display: flex; justify-content: center; align-items: center;">
+                <img *ngIf="currentPoint.loadingUnloadingType == 'верхняя'" src="assets/imgs/truck_out.png">
+                <img *ngIf="currentPoint.loadingUnloadingType == 'боковая'" src="assets/imgs/truck_in.png">
+            </ion-col>
+           <ion-col>
+              <p>Способ загрузки/разгрузки</p>
+              <label text-wrap>{{ currentPoint?.loadingUnloadingType }}</label>
+           </ion-col>
+         </ion-row>        
+      </ion-item>
+
+        <ion-row text-center>
+        <ion-col>
+            <button ion-button small color="light" icon-left round (tap)="onCall()">
+              <ion-icon md="md-call" secondary></ion-icon>
+              Позвонить на выгрузку
+            </button>
+        </ion-col>
+      </ion-row>
+      
+
+      <div *ngIf="currentPoint.state == 0" class="paddingDiv"></div>
+      <div *ngIf="currentPoint.state == 1">
+          <ion-row text-center>
+              <ion-col class="maintext">Груз сдан:</ion-col>
+          </ion-row>
+        
+          <ion-list radio-group [(ngModel)]="documentAcception" class="selectionDoc">
+              <ion-row text-center>
+                  <ion-col class="withAcception">Приложены документы:</ion-col>
+              </ion-row>
+
+              <ion-item>
+                  <ion-label>Без повреждений</ion-label>
+                  <ion-radio value="good" (click)="updateDocType('good')" [disabled]="orderService.photosAkt.docs?.length > 0 || orderService.photosZagruzki.docs?.length > 0"></ion-radio>
+              </ion-item>
+
+              <ion-item>
+                <ion-label class="attachDocs">С повреждениями</ion-label>
+                <ion-radio value="bad" (click)="updateDocType('bad')" [disabled]="orderService.photosTransportnaya.docs?.length > 0"></ion-radio>
+              </ion-item>
+            </ion-list> 
+      </div>
+
+
+      <div *ngIf="documentAcception == 'bad' && currentPoint.state == 1">        
+          <ion-row text-center>
+              <ion-col class="maintext">Приложить документы:</ion-col>
+          </ion-row>
+      
+          <ion-list>
+              <button ion-item class="photoButton" (click)="uploadDocuments(1)">
+                  <img class="docImage" *ngIf="orderService.photosZagruzkiTest.docs.length == 0" item-start src="assets/imgs/default-placeholder.png">
+                  <img class="docImage" *ngIf="orderService.photosZagruzkiTest.docs.length > 0" item-start src="assets/imgs/geenDoc.png">
+                  <h3>Фото загрузка</h3>
+              </button>
+            
+              <button ion-item class="photoButton" (click)="uploadDocuments(2)">
+                  <img class="docImage" *ngIf="orderService.photosAktTest.docs.length == 0" item-start src="assets/imgs/default-placeholder.png">
+                  <img class="docImage" *ngIf="orderService.photosAktTest.docs.length > 0" item-start src="assets/imgs/geenDoc.png">
+                  <h3>Акт повреждений</h3>
+              </button>
+            
+              <button ion-item class="photoButton" (click)="uploadDocuments(3)">
+                  <img class="docImage" *ngIf="orderService.photosTransportnayaTest.docs.length == 0" item-start src="assets/imgs/default-placeholder.png">
+                  <img class="docImage" *ngIf="orderService.photosTransportnayaTest.docs.length > 0" item-start src="assets/imgs/geenDoc.png">
+                  <h3>Транспортная накладная</h3>
+              </button>
+          </ion-list>
+      </div>
+      
+      <div *ngIf="documentAcception == 'good' && currentPoint.state == 1">        
+        <ion-row text-center>
+            <ion-col class="maintext">Приложены документы:</ion-col>
+        </ion-row>
+    
+        <ion-list>
+            <button ion-item  class="photoButton" (click)="uploadDocuments(3)">
+                  <img class="docImage" *ngIf="orderService.photosTransportnayaTest.docs.length == 0" item-start src="assets/imgs/default-placeholder.png">
+                  <img class="docImage" *ngIf="orderService.photosTransportnayaTest.docs.length > 0" item-start src="assets/imgs/geenDoc.png">
+                  <h3>Транспортная накладная</h3>
+            </button>
+        </ion-list>
+      </div>
+
+    </ion-card>
+
+    <ion-row text-center class="buttonClass">
+          <ion-col *ngIf="!isLastPoint && orderService.activeOrders[0].status !== 9 && currentPoint?.state !== 0">
+              <button ion-button block large button-small class="lightButton" (tap)="onDelay()">
+                Задержка
+              </button>
+          </ion-col>
+
+          <ion-col *ngIf="currentPoint?.state === 0 && (orderService.activeOrders[0].status === 5 || orderService.activeOrders[0].status === 4)">
+            <button ion-button block large button-small class="lightButton" (tap)="onPauseRoute()">
+              Задержка в пути
+            </button>
+          </ion-col>
+
+          <ion-col *ngIf="!isLastPoint">
+              <button ion-button block large button-small class="lightButton" (tap)="onCame()" *ngIf="currentPoint?.state == 0">
+                <label *ngIf="!locationTracker.isLoading">Прибыл</label>
+                <ion-spinner *ngIf="locationTracker.isLoading"></ion-spinner>
+              </button>
+              <button ion-button block large button-small class="lightButton" (tap)="onGoFrom()" *ngIf="currentPoint?.state !== 0">
+                {{title}}
+            </button>
+          </ion-col>
+
+        <ion-col *ngIf="isLastPoint">
+          <button ion-button block large button-small class="lightButton"
+                    [disabled]="!helperService.isNetworkConnected" (tap)="finishOrder()">
+               Завершить доставку
+          </button>
+        </ion-col>
+        
+    </ion-row>
+  </div>
+
+</ion-content>

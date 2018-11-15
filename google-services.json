@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "432907125436",
+    "firebase_url": "https://technicol-24467.firebaseio.com",
+    "project_id": "technicol-24467",
+    "storage_bucket": "technicol-24467.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432907125436:android:e1cd7023c1bb5ec3",
+        "android_client_info": {
+          "package_name": "io.ionic.technonikol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432907125436-qm0n358vc7mijrp7glou09lta4gvl6rs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDplbGNaAu4VUBWdj0PJvEAn2268vvCAv0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

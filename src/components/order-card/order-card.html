@@ -1,0 +1,14 @@
+  <ion-card class="waitingOrderCard">
+      <ion-card-content>
+  
+          <ion-card-title>
+            {{ order?.number }} <p *ngIf="order?.textError" class="errorText"> - {{ order?.textError }}</p>
+          </ion-card-title>
+          
+          <p>Погрузка {{ order?.inItems[0].timeIn*1000 | date: 'dd.MM.yyyy H:mm' }}</p>
+          <label text-wrap class="go">{{ order?.inItems[0].address }} </label><br>
+          <p>Доставка {{ order?.outItems[0].timeIn*1000 | date: 'dd.MM.yyyy H:mm' }}</p>
+          <label text-wrap class="come">{{ order?.outItems[0].address }}</label>
+  
+      </ion-card-content>
+  </ion-card>

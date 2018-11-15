@@ -1,0 +1,18 @@
+
+key password: tehnonikoldriver
+
+
+
+  $ ionic cordova build --prod --release android
+  
+  
+ keytool -genkey -v -keystore /Users/aydogdy/workspace/projects/er/TechNikol/keys/technikol-release-key.keystore -alias tech_nikol_driver -keyalg RSA -keysize 2048 -validity 10000
+
+
+ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore /Users/aydogdy/workspace/projects/er/TechNikol/keys/technikol-release-key.keystore /Users/aydogdy/workspace/projects/er/TechNikol/platforms/android/build/outputs/apk/android-release-unsigned.apk tech_nikol_driver  
+
+
+// from path:   /Users/aydogdy/Library/Android/sdk/platform-tools
+
+ zipalign -v 4 /Users/aydogdy/workspace/projects/er/TechNikol/platforms/android/build/outputs/apk/android-release-unsigned.apk /Users/aydogdy/workspace/projects/er/TechNikol/keys/TechDriver.apk
+ 

@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon class="menuIcon" name="menu"></ion-icon>
+    </button>  
+    <ion-title>Новые</ion-title>
+    <ion-buttons start>
+        <button ion-button icon-only (tap)="toggleAppTheme()">
+           <ion-icon *ngIf="selectedTheme == 'light-theme'" class="modeIcon" ios="ios-moon" md="md-moon"></ion-icon>
+           <ion-icon *ngIf="selectedTheme == 'dark-theme'" class="modeIcon" ios="ios-sunny" md="md-sunny"></ion-icon>
+        </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-row text-center>
+      <ion-col>
+          <ion-spinner *ngIf="isLoading"></ion-spinner>
+      </ion-col>
+    </ion-row>
+    
+    <ion-card class="waitingOrderCard" *ngFor="let order of orderService.newOrders; let i=index" (tap)="onSelectOrder(order, i)">
+      <ion-card-content>
+          <ion-card-title>
+            {{ order?.number }} <p *ngIf="order?.textError" class="errorText"> - {{ order?.textError }}</p>
+          </ion-card-title>
+          
+          <p>Погрузка {{ order?.inItems[0].timeIn*1000 | date: 'dd.MM.yyyy H:mm' }}</p>
+          <label text-wrap class="go">{{ order?.inItems[0].address }} </label><br>
+          <p>Доставка {{ order?.outItems[0].timeIn*1000 | date: 'dd.MM.yyyy H:mm' }}</p>
+          <label text-wrap class="come">{{ order?.outItems[0].address }}</label>
+  
+      </ion-card-content>
+    </ion-card>
+</ion-content>

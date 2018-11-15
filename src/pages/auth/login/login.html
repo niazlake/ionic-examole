@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <label *ngIf="!authService.isRegistration">Авторизация</label>
+      <label *ngIf="authService.isRegistration">Регистрация</label>
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button icon-only (tap)="toggleAppTheme()">
+        <ion-icon *ngIf="selectedTheme == 'light-theme'" class="modeIcon" ios="ios-moon" md="md-moon"></ion-icon>
+        <ion-icon *ngIf="selectedTheme == 'dark-theme'" class="modeIcon" ios="ios-sunny" md="md-sunny"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content (tap)="onClickContent()">
+
+  <ion-grid class="logoGrid">
+    <ion-row text-center>
+      <ion-col col-8 offset-2>
+        <img *ngIf="selectedTheme == 'light-theme'" src="assets/imgs/day_logo.png" />
+        <img *ngIf="selectedTheme == 'dark-theme'" src="assets/imgs/night_logo.png" />
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <form [formGroup]="loginForm" (ngSubmit)="getCode()" (tap)="onClickContent()" class="loginForm" novalidate>
+    <ion-grid>
+
+      <ion-row>
+        <ion-col col-8 offset-2>
+          <div class="form-group" class="phone" (tap)="onClickContent()">
+            <ion-item no-lines>
+              <ion-input type="tel" text-center [textMask]="{mask: masks.phone}" placeholder="Телефон номер" formControlName="phone" [disabled]="isLoading"></ion-input>
+            </ion-item>
+          </div>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row text-center>
+        <ion-col col-6 offset-3>
+          <button ion-button block (tap)="onClickContent()" type="submit" [disabled]="!loginForm.valid" class="lightButton">
+            <span *ngIf="!isLoading">Далее</span>
+            <ion-spinner *ngIf="isLoading"></ion-spinner>
+          </button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row text-center>
+        <ion-col>
+          <label (tap)="registrationLabel()" *ngIf="!authService.isRegistration">Зарегистрироваться</label>
+          <label (tap)="registrationLabel()" *ngIf="authService.isRegistration">Войти</label>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
+
+  <ion-row text-center *ngIf="authService.isRegistration">
+    <ion-col col-10 offset-1>
+      <a (click)="showExternalLinkAlert('https://www.tn.ru/docs/user-agreement/', 'Пользовательское соглашение')">Пользовательское соглашение</a> и
+      <a (click)="showExternalLinkAlert('https://www.tn.ru/docs/driver-helper/', 'Соглашение о хранении персональных данных')">Соглашение о хранении персональных данных</a>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="privacy" text-center *ngIf="authService.isRegistration">
+    <ion-col col-7 offset-3>
+      <ion-item no-lines>
+        <ion-label>Я согласен</ion-label>
+        <ion-checkbox [(ngModel)]="agree"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

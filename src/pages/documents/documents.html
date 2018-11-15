@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title> Прикрепление документы</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>{{ subtitle }}</ion-col>
+    </ion-row>
+
+
+    <ion-row text-center>
+        <ion-col col-4 *ngFor="let photo of documents.docs">
+            <img src="{{photo}}">
+        </ion-col>
+    </ion-row>
+
+
+    <div *ngIf="!isLimitCompleted">
+        <ion-row text-center>
+          <ion-col>
+              <button ion-button block (click)="addPhoto()">Добавить фото</button>
+          </ion-col>
+        </ion-row>
+
+        <ion-row text-center>
+            <ion-col>
+                <button ion-button block (click)="sendOrderDocumnents()">Сохранить</button>
+            </ion-col>
+        </ion-row>
+    </div>
+      
+  </ion-grid>
+
+</ion-content>

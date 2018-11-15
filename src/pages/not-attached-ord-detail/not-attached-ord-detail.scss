@@ -1,0 +1,40 @@
+page-not-attached-ord-detail {
+    .menuIcon{
+        color: #ffffff !important;
+    }
+    h3{
+        padding-left: 10px;
+    }
+    .slideTag{
+        // top: -110px;
+        .docImage{
+            width: 50px !important;
+            height: 50px !important;
+        }
+        .maintext{
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .ifNoZayavka{
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            height: 100%;
+            color:#A9A9A9;
+        }
+        .buttonClass{
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .paddingDiv{
+            padding-bottom: 15px;
+            // background-color: green;
+        }
+        .item-inner{
+            margin:-5px;
+        }
+    }
+    ion-slides {
+        height: auto;
+    }
+}

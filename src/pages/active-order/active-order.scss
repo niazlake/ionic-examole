@@ -1,0 +1,36 @@
+page-active-order {
+    
+    h3{
+        padding-left: 10px;
+        color: red;
+    }
+    .sadIcon{
+        width: 50px !important;
+        height: 50px !important;
+    }
+    .docImage{
+        width: 50px !important;
+        height: 50px !important;
+    }
+    .maintext{
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+    .ifNoZayavka{
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        height: 100%;
+        color:#A9A9A9;
+    }
+    .buttonClass{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .paddingDiv{
+        padding-bottom: 15px;
+    }
+    .item-inner{
+        margin:-5px;
+    }
+}
